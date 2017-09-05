@@ -1,0 +1,6 @@
+start api service 
+
+in cmd navigate to 
+/Users/justine/Documents/code/NodeRestful
+
+npm start
