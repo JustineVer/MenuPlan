@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+    <header>
+        <title>Menu Plan</title>
+        <meta charset='utf-8'>
+        <link rel="stylesheet" type="text/css" href="../../../../semantic/dist/semantic.min.css">
+        <style>
+            .pusher {
+                padding-top:100px
+            }
+        </style>
+   
+    </header>
+    <body>
+        <div class="ui sidebar vertical left visible menu">
+            <div class="item">
+                <div class="ui labeled input">
+                        <div class="ui label">
+                        Search
+                        </div>
+                        <input type="text" placeholder="Search...">
+                    </div>
+                </div>
+                <div class="ui dropdown meatType">
+                    <div class="text"></div>
+                    <i class="dropdown icon"></i>
+                </div>
+                <br>
+                
+                <label for="selectMealType">Select Meal Type</label>
+                <div class="ui dropdown mealType" id="selectMealType">
+                    <div class="text" ></div>
+                    <i class="dropdown icon"></i>
+                </div>
+                <br>
+                <button class="ui primary button search">
+                        Search
+                      </button>
+                      <button class="ui button">
+                        Cancel
+                      </button>
+            </div>
+        <div class="ui basic icon top fixed menu">
+            
+        </div>
+        <div class="ui pusher">
+            <div class="ui container">
+                <h1 id='h1'>Menu Plan</h1>
+
+                <div class='ui green menu'> 
+                    <a href='MenuPlan.html' class='item active'><i class="calendar icon"></i>PLAN</a>
+                    <a href='AddNewMeal.html' class='item'><i class="plus icon"></i>ADD</a>
+                    <a href='History.html' class='item'><i class="history icon"></i>PAST MEALS</a>
+                </div>
+            
+        
+
+        <div class="ui mini modal" id="uiMiniModal">
+            <i class="close icon"></i>
+            <div class="header">
+              Select Action
+            </div>
+            
+            <div class="actions">
+                <div class="ui button" id="viewButton">
+                  View Recipe
+                </div>
+                <div class="ui primary button" id="addToPlan">
+                  Add to Meal Plan
+                </div>
+                <div class="ui primary hidden button" id="deleteFromPlan">
+                    Remove from Meal Plan
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+                integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+                crossorigin="anonymous"></script>
+        <script src="../../../../semantic/dist/semantic.min.js"></script>
+        <script src="../js/MenuPlan.js"></script>
+        <script src="../js/navigate.js"></script>
+
+    </body>
+</html>

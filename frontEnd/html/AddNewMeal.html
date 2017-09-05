@@ -1,1 +1,41 @@
+<!doctype html>
+<html lang="en">
+    <header>
+        <title>Menu Plan</title>
+        <meta charset='utf-8'>
+        <h1>Menu Plan</h1>
+        <div class='ui green menu'> 
+            <a href='MenuPlan.html' class='item'>PLAN</a>
+            <a href='AddNewMeal.html' class='item active'>ADD</a>
+            <a href='History.html' class='item'>PAST MEALS</a>
+        </div>
+        <link rel="stylesheet" type="text/css" href="../../../../semantic/dist/semantic.min.css">
+        <script
+          src="https://code.jquery.com/jquery-3.1.1.min.js"
+          integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+          crossorigin="anonymous"></script>
+        <script src="../../../../semantic/dist/semantic.min.js"></script>
+    </header>
+    <body>
+<!--        <form>
+            <input type="text" id="name" size="40" placeholder="Meal Name">
+            <input type="file_type" id="FileType" size="40" placeholder="File Type">
+            <input type="button" id="addButton" value="Add Meal">
+        </form>
+        -->
+        <form class="ui form segment">
+            <div class="field">
+                <label>Meal Name</label>
+                <input placeholder="Meal Name" type="text" name="name" />
+            </div>
+            <div class="field">
+                <label>File Type</label>
+                <input placeholder="File Type" type="text" name="fileType" />
+            </div>
+            <div class="ui blue submit button">Submit</div>
+        </form>
+    
+        <script src="../js/AddNewMeal.js"></script>
+    </body>
+</html>
 
