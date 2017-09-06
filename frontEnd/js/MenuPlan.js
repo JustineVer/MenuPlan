@@ -6,17 +6,31 @@ var selectedMeals =[];
 
 window.onload=function(){
     var url="http://localhost:3000/meal_options";
-    var request= new XMLHttpRequest();
-    request.open("GET",url);
-    request.onload = function() {
-        if (request.status==200) {
-            unfilteredMeals = JSON.parse(request.responseText);            
+    
+    $.ajax({
+        type: "GET",                                            // GET or POST
+        url: url,                                               // Path to file
+        timeout: 2000,                                          // Waiting time
+/*        beforeSend: function() {                                // Before Ajax 
+          $content.append('<div id="load">Loading</div>');      // Load message
+        },
+        complete: function() {                                  // Once finished
+          $('#load').remove();                                  // Clear message
+        },*/
+        success: function(data) {                               // Show content
+            unfilteredMeals = (data);            
             getOptions(unfilteredMeals);
-            getHistory();            
+            getHistory();  
+        },
+        error: function() {                                     // Show error msg 
+         // $content.html('<div class="container">Please try again soon.</div>');
+         console.log('error');
         }
-    };
-    request.send(null);
+      });
+
 }
+
+
 function clicking () {
     $('.selectMeal').on('click', function(e){
         if (e.preventDefault) {
@@ -109,63 +123,48 @@ $('.ui.dropdown.mealType').dropdown({
 
 function getOptions(responseText) {
     createMainContainer();
-    var mealListDiv= document.getElementById("mealList");
-
-    var row, column1, column2, column3, column4, image1, image2, image3, image4;
-    row =document.createElement("div");   
+    var $mealListDiv= jQuery("#mealList");
+    var $column1, $column2, $column3, $column4, $image1, $image2, $image3, $image4, $row;
     var meals = responseText;
     for (var i=0; i<meals.length;i++){
         var meal=meals[i];
-        var imageHolder;
+        var imageHolder="<p></p>";
         imageHolder= '<a href="#" class="selectMeal" id="'+meal.id+'"><img src="'+meal.image_path+'" alt="'+meal.name+'">';
         imageHolder += '<br>'+meal.name+'</a>';
-        
         if ((i+1)%4==1){
-            column1=document.createElement("row");   
-            column1.classList.add("column");  
-            image1=document.createElement("div")
-            image1.classList.add("ui");  
-            image1.classList.add("image");  
-            image1.classList.add("small");  
-            image1.innerHTML = imageHolder;
+            $column1=$("<row>", {"class":"column"});  
+            $image1=$("<div>",{"class": "ui image small"}).html(imageHolder);
         } else if ((i+1)%4==2){
-            column2=document.createElement("row");   
-            column2.classList.add("column");  
-            image2=document.createElement("div")
-            image2.classList.add("ui");  
-            image2.classList.add("image");  
-            image2.classList.add("small");  
-            image2.innerHTML = imageHolder;
+            $column2=$("<row>", {"class":"column"});  
+            $image2=$("<div>",{"class": "ui image small"}).html(imageHolder);
         } else if ((i+1)%4==3){
-            column3=document.createElement("row");   
-            column3.classList.add("column");  
-            image3=document.createElement("div")
-            image3.classList.add("ui");  
-            image3.classList.add("image");  
-            image3.classList.add("small");  
-            image3.innerHTML = imageHolder;
+            $column3=$("<row>", {"class":"column"});  
+            $image3=$("<div>",{"class": "ui image small"}).html(imageHolder);
         } else if ((i+1)%4==0){
-            column4=document.createElement("row");   
-            column4.classList.add("column");  
-            image4=document.createElement("div")
-            image4.classList.add("ui");  
-            image4.classList.add("image");  
-            image4.classList.add("small");  
-            image4.innerHTML = imageHolder;
-            
-            row =document.createElement("div");   
-            row.classList.add("row");  
-            row.classList.add("four");  
-            row.classList.add("column");  
-            mealListDiv.appendChild(row);
-            row.appendChild(column1);
-            column1.appendChild(image1);
-            row.appendChild(column2);
-            column2.appendChild(image2);
-            row.appendChild(column3);
-            column3.appendChild(image3);
-            row.appendChild(column4);
-            column4.appendChild(image4);            
+            $column4=$("<row>", {"class":"column"});  
+            $image4=$("<div>",{"class": "ui image small"}).html(imageHolder);
+        }
+        if (((i+1)%4==0) || (i==(meals.length-1))){
+            $row = $("<div/>", {"class": "row four column"});
+            $mealListDiv.append($row);
+            $row.append($column1);
+            $column1.append($image1);
+
+            if ((i+1)%4>2 && (i==(meals.length-1))||((i+1)%4==0))
+            {
+                $row.append($column2);
+                $column2.append($image2);
+                if ((i+1)%4>3 && (i==(meals.length-1))|| ((i+1)%4==0))
+                {
+                    $row.append($column3);
+                    $column3.append($image3);
+                    if ((i+1)%4>4 && (i==(meals.length-1))|| ((i+1)%4==0))
+                    {
+                        $row.append($column4);
+                        $column4.append($image4);            
+                    }
+                }
+            }
         }
     }
     clicking();
@@ -195,58 +194,32 @@ $('.ui.primary.button.search').click(function() {
   });
 
 function createMainContainer(){
-    var uiContainers = document.getElementsByClassName("ui container");
-    var uiContainer = uiContainers[0];
-    var mealList=document.createElement("div")
-    mealList.classList.add("ui");  
-    mealList.classList.add("four");  
-    mealList.classList.add("column");  
-    mealList.classList.add("doubling");  
-    mealList.classList.add("stackable");  
-    mealList.classList.add("grid");  
-    mealList.classList.add("container");  
-    mealList.classList.add("image");  
-    mealList.setAttribute("id", "mealList")
-    uiContainer.appendChild(mealList);
+    var $uiContainer = $( "#uiContainer" );
+    var $mealList=$("<div>", {"class":"ui four column doubling stackable grid container image", "id":"mealList"});
+    $uiContainer.append($mealList);
 }
 
 function populateModal(id, eaten_id){
     selectedMeal = unfilteredMeals.filter(function (meal) { return meal.id == id });
-    var miniModal = document.getElementById('uiMiniModal');
-    var miniModalDescription = $('#uiMiniModalDescription');
-    if (miniModalDescription.innerHTML !== null){
+    var $miniModal = $('#uiMiniModal');
+    var $miniModalDescription = $('#uiMiniModalDescription');
+    if ($miniModalDescription.html() !== null){
         $('#uiMiniModalImage').remove();
         $('#uiMiniModalDescription').remove();
     }
-    var image=document.createElement("div")
-    image.classList.add("image");  
-    image.classList.add("content");  
-    image.setAttribute("id", "uiMiniModalImage");
-    image.setAttribute("eaten_id", eaten_id);
+    var $image=$("<div>", {"class":"image content", "id": "uiMiniModalImage", "eaten_id": eaten_id});
+    var $smallImage= $("<div>", {"class": "ui small image"}).html('<img src="'+selectedMeal[0].image_path+'" alt="'+selectedMeal[0].name+'">'); 
 
-    var smallImage= document.createElement("div");  
-    smallImage.classList.add("ui");  
-    smallImage.classList.add("small");  
-    smallImage.classList.add("image"); 
-    smallImage.innerHTML = '<img src="'+selectedMeal[0].image_path+'" alt="'+selectedMeal[0].name+'">'; 
+    var $description = $("<div>", {"class": "description", "id":"uiMiniModalDescription"});
+    var $uiHeader = $("<div>", {"class": "ui header"}).html(selectedMeal[0].name);
 
-    var description = document.createElement("div");
-    description.classList.add("description");
-    description.setAttribute("id", "uiMiniModalDescription")
-    var uiHeader = document.createElement("div");
-    uiHeader.classList.add("ui");
-    uiHeader.classList.add("header");
-    uiHeader.innerHTML=selectedMeal[0].name;
-
-    var meatMealType = document.createElement("p");
-    meatMealType.innerHTML = selectedMeal[0].meal_type+" "+selectedMeal[0].meat_type;
-    miniModal.insertBefore(image,miniModal.childNodes[miniModal.childNodes.length-2]);
-
-    image.appendChild(smallImage);
-
-    image.appendChild(description);
-    description.appendChild(uiHeader);
-    description.appendChild(meatMealType);
+    var $meatMealType = $("<p>").html(selectedMeal[0].meal_type+" "+selectedMeal[0].meat_type);
+    
+    $image.insertBefore($miniModal.children(".actions"));
+    $image.append($smallImage);
+    $image.append($description);
+    $description.append($uiHeader);
+    $description.append($meatMealType);
     
     if  (typeof selectedMeal[0].path === "undefined" || selectedMeal[0].path === null) {
         $( "#viewButton" ).addClass( "disabled" );
@@ -257,36 +230,41 @@ function populateModal(id, eaten_id){
 
 function addMeal(selectedMeal){
     var url="http://localhost:3000/eaten";
-    var request= new XMLHttpRequest();
-    request.open("POST",url,true);
-
-    //Send the proper header information along with the request
-    request.setRequestHeader("Content-type", "application/json");
-    request.onreadystatechange = function() {//Call a function when the state changes.
-        if(request.readyState == XMLHttpRequest.DONE && request.status == 200) {
-            // Request finished. Do processing here.
-            $('#uiImagesRightFloatedMini').remove();
-            getHistory();
-        }
-    }
     var eaten=    {
         "meal_option_id": selectedMeal.id,
         "date_eaten": todaysDate(),
         "liked": ""};
-        request.send(JSON.stringify(eaten));
+    
+    $.post(url,                                               // Path to file
+        eaten)
+        .done(function(data) {                               // Show content
+            $('#uiImagesRightFloatedMini').remove();
+            getHistory();
+        })
+        .fail(function() {
+            console.log( "error" );
+        })
+        .always(function() {
+            console.log( "finished" );
+        });
+    
 }
 
 function deleteMeal(selectedMeal){
     var url="http://localhost:3000/eaten/"+$('#uiMiniModalImage').attr("eaten_id");
-    var request= new XMLHttpRequest();
-    request.open("DELETE",url);
-    request.onload = function() {
-        if (request.status==200) {
+    $.ajax({
+        type: "DELETE",                                            // GET or POST
+        url: url,                                               // Path to file
+        timeout: 2000,                                          // Waiting time
+        success: function(data) {                               // Show content
             $('#uiImagesRightFloatedMini').remove();
             getHistory();
+        },
+        error: function() {                                     // Show error msg 
+         // $content.html('<div class="container">Please try again soon.</div>');
+         console.log('error');
         }
-    };
-    request.send(null);
+      });
 }
 
 function todaysDate(){
@@ -295,18 +273,27 @@ function todaysDate(){
 }
 
 function getHistory(){
-
     var url="http://localhost:3000/eaten";
-    var request= new XMLHttpRequest();
-    request.open("GET",url);
-    request.onload = function() {
-        if (request.status==200) {
-            var unfilteredHistory = JSON.parse(request.responseText);
+    $.ajax({
+        type: "GET",                                            // GET or POST
+        url: url,                                               // Path to file
+        timeout: 2000,                                          // Waiting time
+/*        beforeSend: function() {                                // Before Ajax 
+          $content.append('<div id="load">Loading</div>');      // Load message
+        },
+        complete: function() {                                  // Once finished
+          $('#load').remove();                                  // Clear message
+        },*/
+        success: function(data) {                               // Show content
+            var unfilteredHistory = data;
             var filteredHistory = filterHistory(unfilteredHistory);
             displayCurrentMeals(filteredHistory);
+        },
+        error: function() {                                     // Show error msg 
+         // $content.html('<div class="container">Please try again soon.</div>');
+         console.log('error');
         }
-    };
-    request.send(null);
+      });
 
 }
 
@@ -330,22 +317,16 @@ function filterHistory(unfilteredHistory){
 }
 
 function displayCurrentMeals(filteredHistory){
-    var imageDiv = document.createElement("div");
-    imageDiv.classList.add("ui");
-    imageDiv.classList.add("images");
-    imageDiv.classList.add("right");
-    imageDiv.classList.add("floated");
-    imageDiv.classList.add("mini");
-    imageDiv.setAttribute("id", "uiImagesRightFloatedMini")
+    var $imageDiv = $("<div>", {"class": "ui images right floated mini", "id": "uiImagesRightFloatedMini"});
     var meals = "";
     for (var i=0; i<filteredHistory.length;i++){            
         var meal=filteredHistory[i];    
         meals += "<a href='#' class='plannedMeal' id='"+filteredHistory[i].id+"' eaten_id='"+filteredHistory[i].eaten_id+"'>";
         meals += "<img src='"+filteredHistory[i].image_path+"' title='"+filteredHistory[i].name;
         meals += "'></a>";
-        imageDiv.innerHTML = meals;
+        $imageDiv.html(meals);
     }
-    var h1 = document.getElementById('h1');
-    h1.appendChild(imageDiv);
+    var $h1 = $('#h1');
+    $h1.append($imageDiv);
     clicking();
 }
