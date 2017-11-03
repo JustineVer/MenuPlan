@@ -1,0 +1,33 @@
+<div data-ng-controller="mainController as MainController">
+    <h1>{{ MainController.appName }}</h1>
+    <!--xs (phones), sm (tablets), md (desktops), and lg (larger desktops)-->
+    <div class = "col-lg-1 col-sm-2 col-md-2 col-xs-3" data-ng-repeat="plan in MainController.currentPlan">
+        <div class="thumbnailTiny">
+                <div ng-controller="ModalController as modalController" class="modal-demo">
+                    <script type="text/ng-template" id="myModalContent.html">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="modal-title">{{ modalController.detailItem.name }}</h3>
+                        </div>
+                        <div class="modal-body" id="modal-body">
+                            <div style="display:inline;text-align:left; float: left;">
+                                <img ng-src="{{modalController.detailItem.image_path}}" alt = "{{modalController.detailItem.name}}" style="width:50%" />
+                                <div style="float: center; display: inline-block;">
+                                    <p>Meal Type: {{modalController.detailItem.meal_type}}<br>
+                                    Meat Type: {{modalController.detailItem.meat_type}}</p>
+                                </div>
+                            </div>
+
+                        <div class="modal-footer">
+                            <button class="btn btn-default" type="button" ng-click="modalController.ok()">Edit Meal</button>
+                            <button class="btn btn-default" type="button" ng-click="modalController.removePlan()">Delete Meal</button>
+                            <button class="btn btn-warning" type="button" ng-click="modalController.cancel()">Cancel</button>
+                        </div>
+                    </script>
+                    <a href="" ng-click="modalController.open(plan)">
+                        <img ng-src="{{plan.image_path}}" alt = "{{plan.name}}" style="width:50%" />
+                    </a>
+                </div>
+        
+        </div>
+    </div>
+</div>

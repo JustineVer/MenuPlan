@@ -1,0 +1,38 @@
+
+<div >
+    <div class = "row">
+      <div class = "col-lg-2 col-sm-3 col-md-3 col-xs-4" data-ng-repeat="meal in MealController.allMeals">
+        <div class="thumbnail">
+<!--            <a href="#/EditBook/{{ book.book_id }}">Edit</a>
+            <a ng-click="books.deleteBook(book.book_id)" href="">Delete</a>
+-->
+
+            <div ng-controller="ModalController as modalController" class="modal-demo">
+                <script type="text/ng-template" id="myModalContent.html">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="modal-title">{{ modalController.detailItem.name }}</h3>
+                    </div>
+                    <div class="modal-body" id="modal-body">
+                        <div style="display:inline;text-align:left; float: left;">
+                            <img ng-src="{{modalController.detailItem.image_path}}" alt = "{{modalController.detailItem.name}}" style="width:50%" />
+                            <div style="float: center; display: inline-block;">
+                                <p>Meal Type: {{modalController.detailItem.meal_type}}<br>
+                                Meat Type: {{modalController.detailItem.meat_type}}</p>
+                            </div>
+                        </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="button" ng-click="modalController.ok()">Add Meal to Plan</button>
+                        <button class="btn btn-default" type="button" ng-click="modalController.edit()">Edit Meal</button>
+                        <button class="btn btn-default" type="button" ng-click="modalController.ok()">Delete Meal</button>
+                        <button class="btn btn-warning" type="button" ng-click="modalController.cancel()">Cancel</button>
+                    </div>
+                </script>
+                <a href="#/" ng-click="modalController.open(meal)">
+                    <img ng-src="{{meal.image_path}}" alt = "{{meal.name}}" style="width:50%" />
+                    {{meal.name}}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
