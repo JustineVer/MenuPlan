@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <!--Web crawlers traditionally have a hard time with fat client-side 
+    JavaScript apps. To support web crawlers that run through the 
+    app, we need to add a meta tag in the head. This meta tag causes 
+    the crawler to request links with an empty escaped fragment 
+    parameter so that the back end will serve back snippets of HTML.-->
+    <meta name="fragment" content="!" />
+    <link href="css/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        h1 { float:left}
+        .thumbnail {
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: none;
+        }
+        .thumbnailTiny img {
+            max-width: 100%;
+            max-height: 100%;
+            display: flex;
+            margin: 0;
+            border: none;
+        }
+    </style>
+</head>
+<body ng-app="app">
+<div data-ng-controller="MainController as MainController">
+    <h1>{{ MainController.appName }}</h1>
+    <!--xs (phones), sm (tablets), md (desktops), and lg (larger desktops)-->
+    <div class = "col-lg-1 col-sm-2 col-md-2 col-xs-3" data-ng-repeat="plan in MainController.currentPlan">
+        <div class="thumbnailTiny">
+                <div ng-controller="ModalController as modalController" class="modal-demo">
+                    <script type="text/ng-template" id="myModalContent.html">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="modal-title">{{ modalController.detailItem.name }}</h3>
+                        </div>
+                        <div class="modal-body" id="modal-body">
+                            <div style="display:inline;text-align:left; float: left;">
+                                <img ng-src="{{modalController.detailItem.image_path}}" alt = "{{modalController.detailItem.name}}" style="width:50%" />
+                                <div style="float: center; display: inline-block;">
+                                    <p>Meal Type: {{modalController.detailItem.meal_type}}<br>
+                                    Meat Type: {{modalController.detailItem.meat_type}}</p>
+                                </div>
+                            </div>
+
+                        <div class="modal-footer">
+                            <button class="btn btn-default" type="button" ng-click="modalController.edit()">Edit Meal</button>
+                            <button class="btn btn-default" type="button" ng-click="modalController.remove()">Delete</button>
+                            <button class="btn btn-warning" type="button" ng-click="modalController.cancel()">Cancel</button>
+                        </div>
+                    </script>
+                    <a href="" ng-click="modalController.open(plan)">
+                        <img ng-src="{{plan.image_path}}" alt = "{{plan.name}}" style="width:50%" />
+                    </a>
+                </div>
+        
+        </div>
+    </div>
+    <br>
+    <br>
+    <br><br>
+    <br>
+    <a href="#/">Main</a>
+    <a href="#/AutoFill">Auto-Fill Plan</a>
+    <a href="#/AddNewMeal">Add New Meal</a>
+    <a href="#/ViewHistory">View History</a>
+
+    <div ng-view></div>
+</div>
+<script src="app/angular/angular.min.js"></script>
+<!--<script src="css/js/jquery-3.0.0.min.js"></script>
+<script src="css/js/bootstrap.min.js"></script>-->
+<script src="css/js/ui-bootstrap-tpls-2.5.0.min.js"></script>
+<script src="app/angular/angular-route.min.js"></script>
+<script src="app/angular/angular-resource.js"></script>
+<script src="app/angular/angular-animate.js"></script>
+<script src="app/angular/angular-sanitize.js"></script>
+<script src="app/app.js"></script>
+<script src="app/controllers/MainController.js"></script>
+<script src="app/meal/MealController.js"></script>
+<script src="app/meal/ModalController.js"></script>
+<script src="app/plan/AutoFillController.js"></script>
+<script src="app/meal/AddMealController.js"></script>
+<script src="app/meal/EditMealController.js"></script>
+<script src="app/meal/dataService.js"></script>
+<script src="app/config/typeService.js"></script>
+<script src="app/config/loggerService.js"></script>
+<script src="app/config/constantService.js"></script>
+<script src="app/config/sharedData.js"></script>
+</body>
+</html>
