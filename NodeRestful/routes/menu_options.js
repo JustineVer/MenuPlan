@@ -29,9 +29,7 @@ else{
 }
 });
 router.post('/',function(req,res,next){
-
         menu_options.addOption(req.body,function(err,count){
-
             //console.log(req.body);
             if(err)
             {
@@ -42,7 +40,7 @@ router.post('/',function(req,res,next){
             }
         });
 });
- router.post('/:id',function(req,res,next){
+/* router.post('/:id',function(req,res,next){
   menu_options.deleteAll(req.body,function(err,count){
     if(err)
     {
@@ -53,7 +51,7 @@ router.post('/',function(req,res,next){
       res.json(count);
     }
   });
-});
+});*/
 router.delete('/:id',function(req,res,next){
 
         menu_options.deleteOption(req.params.id,function(err,count){

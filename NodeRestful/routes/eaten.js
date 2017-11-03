@@ -3,6 +3,7 @@ var router = express.Router();
 var eaten=require('../models/eaten');
 
 router.post('/',function(req,res,next){
+    //console.log(req);
      eaten.addEaten(req.body,function(err,count){
          if(err)
          {
