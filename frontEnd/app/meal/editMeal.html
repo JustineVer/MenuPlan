@@ -1,28 +1,33 @@
-<h3>Edit Meal</h3>
+<div class="page-header"><h4>Edit Meal</h4>
+    <ol class="breadcrumb">
+        <li><a href="#/">Meals</a></li>
+        <li class="active">Edit Meal</a></li>
+    </ol>
+</div>
 
 <form class="form-horizontal" role="form">
     <div class="form-group">
-        <label for="mealName" class="col-sm-1 control-label">Name</label>
-        <div class="col-sm-4">
+        <label for="mealName" class="col-md-1 control-label">Name</label>
+        <div class="col-md-11">
             <input ng-model="mealUpdate.currentMeal.name" type="text" class="form-control" id="mealName" placeholder="Name">
         </div>
     </div>
     <div class="form-group">
-        <label for="mealPath" class="col-sm-1 control-label">URL</label>
-        <div class="col-sm-4">
+        <label for="mealPath" class="col-md-1 control-label">URL</label>
+        <div class="col-md-11">
             <input ng-model="mealUpdate.currentMeal.path" type="text" class="form-control" id="mealPath" placeholder="URL">
         </div>
     </div>
     <div class="form-group">
-            <label for="mealImagePath" class="col-sm-1 control-label">Image Path</label>
-            <div class="col-sm-4">
+            <label for="mealImagePath" class="col-md-1 control-label">Image Path</label>
+            <div class="col-md-11">
                 <input ng-model="mealUpdate.currentMeal.image_path" type="text" class="form-control" id="mealImagePath" placeholder="Image Path">
             </div>
         </div>
     <div class="form-group">
-        <label for="mealFileType" class="col-sm-1 control-label">File Type</label>
-        <div class="col-sm-4">
-            <select ng-model="mealUpdate.currentMeal.file_type" id="mealFileType" 
+        <label for="mealFileType" class="col-md-1 control-label">File Type</label>
+        <div class="col-md-11">
+            <select class="form-control" ng-model="mealUpdate.currentMeal.file_type" id="mealFileType" 
                     ng-options="fileTypes as fileTypes.file_type for fileTypes in mealUpdate.fileTypes track by fileTypes.id">
                 <option value="">Select File Type</option>
             </select>
@@ -30,25 +35,27 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="mealMealType" class="col-sm-1 control-label">Meal Type</label>
-        <div class="col-sm-4">
-            <select ng-model="mealUpdate.currentMeal.meal_type" id="mealMealType" 
+        <label for="mealMealType" class="col-md-1 control-label">Meal Type</label>
+        <div class="col-md-11">
+            <select class="form-control" ng-model="mealUpdate.currentMeal.meal_type" id="mealMealType" 
                     ng-options="mealTypes as mealTypes.meal_type for mealTypes in mealUpdate.mealTypes track by mealTypes.id">
                 <option value="">Select Meal</option>
             </select>
         </div>
     </div>
     <div class="form-group">
-        <label for="mealMeatType" class="col-sm-1 control-label">Meat Type(s)</label>
-        <div class="col-sm-4">
-            <select multiple ng-model="mealUpdate.currentMeal.meat_type" id="mealMeatType" 
+        <label for="mealMeatType" class="col-md-1 control-label">Meat Type(s)</label>
+        <div class="col-md-11">
+            <select class="form-control" multiple ng-model="mealUpdate.currentMeal.meat_type" id="mealMeatType" 
                     ng-options="meatTypes as meatTypes.meat_type for meatTypes in mealUpdate.meatTypes track by meatTypes.id" size="13">
                 <option value="">Select Meat Type(s)</option>
             </select>
         </div>
     </div>
-    <div>
-        <button class="btn btn-primary" type="button" ng-click="mealUpdate.save()">Save</button>
-        <button class="btn btn-warning" type="button" ng-click="mealUpdate.cancel()">Cancel</button>
+    <div class="form-group">
+        <div class="col-sm-4 col-sm-offset-1">
+            <button class="btn btn-primary" type="button" ng-click="mealUpdate.save()">Save</button>
+            <button class="btn btn-warning" type="button" ng-click="mealUpdate.cancel()">Cancel</button>
+        </div>
     </div>
 </form>

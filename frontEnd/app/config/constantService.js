@@ -1,7 +1,7 @@
 (function () {
     
         angular.module('app')
-            .constant('constants', {
+            .constant('constants', { 
                 APP_TITLE: 'Menu Plan',
                 APP_DESCRIPTION: 'Organise your meals over a certain period.',
                 APP_VERSION: '1.0',

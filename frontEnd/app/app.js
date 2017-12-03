@@ -24,6 +24,9 @@
             $logProvider.debugEnabled(true);
     
             $routeProvider
+                .when('/Plan', {
+                    templateUrl: 'app/plan/plan.html',
+                })
                 .when('/AutoFill', {
                     templateUrl: 'app/plan/autoFill.html',
                     controller: 'AutoFillController',
@@ -31,6 +34,11 @@
                 })
                 .when('/', {
                     templateUrl: 'app/meal/meals.html',
+                    controller: 'mealController',
+                    controllerAs: 'MealController'
+                })
+                .when('/PlanMeals', {
+                    templateUrl: 'app/plan/planMeals.html',
                     controller: 'mealController',
                     controllerAs: 'MealController'
                 })

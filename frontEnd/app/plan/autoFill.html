@@ -1,4 +1,9 @@
+<ul class="nav nav-pills navbar-default">
+    <li><a href="#autoFill">Automatically Generate Meal Plan</a></li>
+    <li><a href="#/PlanMeals">Select Meal from Meals Available</a></li>
+</ul>
 <form class="form-horizontal" role="form" ng-show="showFillForm">
+    <div ><p class="text-info">Fill in each of the meat or meal types to automatically generate meal plan</p></div>
     <div class="form-group" >
         <div data-ng-repeat="meatType in AutoFillController.meatTypes">
             <label for="meatType" class="col-sm-2 control-label">{{ meatType.meat_type }}</label>
@@ -15,16 +20,17 @@
     </div>
     <div class="form-group">
         <div class="col-sm-offset-1 col-sm-5">
-            <button ng-click="AutoFillController.autoFill()" class="btn btn-primary">Auto Fill</button>
+            <button ng-click="AutoFillController.autoFill()" class="btn btn-primary">Generate Meal Plan</button>
         </div>
     </div>
 </form>
 <div>
-    <button class="btn btn-primary" ng-show="showButton" ng-click="AutoFillController.hideShowButtons()">Show Filter</button>
-    <button class="btn btn-primary" ng-show="showButton" ng-click="AutoFillController.savePlan()">Save Plan</button>
+    <button class="btn btn-primary" ng-show="showButton" ng-click="AutoFillController.hideShowButtons()">Show Meal Plan Criteria</button>
+    <button class="btn btn-primary" ng-show="showButton" ng-click="AutoFillController.savePlan()">Add to Current Meal Plan</button>
 </div>
-<div >
+<div>
     <div class = "row">
+        <h4>Proposed Bulk Meals</h4>
         <div class = "col-lg-2 col-sm-3 col-md-3 col-xs-4" data-ng-repeat="meal in AutoFillController.autoMeals">
             <div class="thumbnail">
                 <div ng-controller="ModalController as modalController" class="modal-demo">
@@ -47,6 +53,7 @@
                             <button class="btn btn-warning" type="button" ng-click="modalController.cancel()">Cancel</button>
                         </div>
                     </script>
+                    <row></row>
                     <a href="" ng-click="modalController.open(meal)">
                         <h5>{{meal.heading}}</h5>
                         <img ng-src="{{meal.image_path}}" alt = "{{meal.name}}" style="width:50%" />

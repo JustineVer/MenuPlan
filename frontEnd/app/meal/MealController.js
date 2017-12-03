@@ -18,6 +18,7 @@
                 //console.log(meals);
                 sharedData.allMeals = meals;
                 vm.allMeals = meals;
+                console.log(vm.allMeals);
             }
     
             function getMealsNotification(notification) {

@@ -1,53 +1,61 @@
-<h3>Add Meal</h3>
-
-<form class="form-horizontal" role="form">
+<div class="page-header">
+    <ol class="breadcrumb">
+        <li><a href="#/">Meals</a></li>
+        <li class="active">Add New Meal</a></li>
+    </ol>
+    <h3>Add Meal</h3>
+</div>
+<form class="form-horizontal">
     <div class="form-group">
-        <label for="mealName" class="col-sm-1 control-label">Name</label>
-        <div class="col-sm-4">
+        <label for="mealName" class="col-md-1 control-label">Name</label>
+        <div class="col-md-11">
             <input ng-model="mealAdder.newMeal.name" type="text" class="form-control" id="mealName" placeholder="Name">
         </div>
     </div>
+</div>
     <div class="form-group">
-        <label for="mealPath" class="col-sm-1 control-label">URL</label>
-        <div class="col-sm-4">
-            <input ng-model="mealAdder.newMeal.path" type="text" class="form-control" id="mealPath" placeholder="URL">
+        <label for="mealPath" class="col-md-1 control-label">URL</label>
+        <div class="col-md-11">
+                <input ng-model="mealAdder.newMeal.path" type="url" class="form-control" id="mealPath" placeholder="URL">
+            </div>
         </div>
-    </div>
     <div class="form-group">
-            <label for="mealImagePath" class="col-sm-1 control-label">Image Path</label>
-            <div class="col-sm-4">
+        <label for="mealImagePath" class="col-md-1 control-label">Image Path</label>
+        <div class="col-md-11">
                 <input ng-model="mealAdder.newMeal.image_path" type="text" class="form-control" id="mealImagePath" placeholder="Image Path">
             </div>
         </div>
     <div class="form-group">
-        <label for="mealFileType" class="col-sm-1 control-label">File Type</label>
-        <div class="col-sm-4">
-                <select ng-model="mealAdder.newMeal.file_type" id="mealFileType" 
-                    ng-options="item.file_type for item in mealAdder.fileTypes">
+        <label for="mealFileType" class="col-md-1 control-label">File Type</label>
+        <div class="col-md-11">
+            <select class="form-control" ng-model="mealAdder.newMeal.file_type" id="mealFileType" 
+            ng-options="item.file_type for item in mealAdder.fileTypes">
                 <option value="">Select File Type</option>
             </select>
         </div>
     </div>
     <div class="form-group">
-        <label for="mealMealType" class="col-sm-1 control-label">Meal Type</label>
-        <div class="col-sm-4">
-            <select ng-model="mealAdder.newMeal.meal_type" id="mealMealType" 
-                    ng-options="item.meal_type for item in mealAdder.mealTypes">
+        <label for="mealMealType" class="col-md-1 control-label">Meal Type</label>
+        <div class="col-md-11">
+            <select class="form-control" ng-model="mealAdder.newMeal.meal_type" id="mealMealType" 
+            ng-options="item.meal_type for item in mealAdder.mealTypes">
                 <option value="">Select Meal</option>
             </select>
         </div>
     </div>
     <div class="form-group">
-        <label for="mealMeatType" class="col-sm-1 control-label">Meat Type(s)</label>
-        <div class="col-sm-4">
-            <select multiple ng-model="mealAdder.newMeal.meat_type" id="mealMeatType" 
-                    ng-options="item.meat_type for item in mealAdder.meatTypes" size="13">
+        <label for="mealMeatType" class="col-md-1 control-label">Meat Type(s)</label>
+        <div class="col-md-11">
+            <select class="form-control" multiple ng-model="mealAdder.newMeal.meat_type" id="mealMeatType" 
+            ng-options="item.meat_type for item in mealAdder.meatTypes" size="13">
                 <option value="">Select Meat Type(s)</option>
             </select>
         </div>
     </div>
-    <div>
-        <button class="btn btn-primary" type="button" ng-click="mealAdder.save()">Save</button>
-        <button class="btn btn-warning" type="button" ng-click="mealAdder.cancel()">Cancel</button>
+    <div class="form-group">
+        <div class="col-sm-4 col-sm-offset-1">
+            <button class="btn btn-primary" type="button" ng-click="mealAdder.save()">Save</button>
+            <button class="btn btn-warning" type="button" ng-click="mealAdder.cancel()">Cancel</button>
+        </div>
     </div>
 </form>
