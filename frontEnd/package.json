@@ -1,0 +1,24 @@
+{
+  "name": "menuplan",
+  "version": "1.0.0",
+  "description": "application to assist in generating menuplans",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "./node_modules/karma/bin/karma start karma.conf.js"
+  },
+  "keywords": [
+    "meals"
+  ],
+  "author": "justineverheijden",
+  "license": "ISC",
+  "devDependencies": {
+    "jasmine-core": "^2.8.0",
+    "karma": "^1.7.1",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-jasmine": "^1.1.0",
+    "karma-phantomjs-launcher": "^1.0.4"
+  }
+}

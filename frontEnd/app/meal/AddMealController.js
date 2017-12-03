@@ -12,27 +12,49 @@
         vm.newMeal = {};
         vm.save;
         vm.cancel;
-        
+
+        function getMeatTypeSuccess(meatTypes) {
+            //console.log(meatTypes);
+            sharedData.meatTypes = meatTypes;
+            vm.meatTypes = meatTypes;
+            vm.newMeal.meat_type = "";
+        }
+
+        function getMeatTypeNotification(notification) {
+            //console.log('Promise Notification: ' + notification);
+        }
+
+        function errorCallback(errorMsg) {
+            console.log('Error Message: ' + errorMsg);
+        }
+
+        function getMealTypeSuccess(mealTypes) {
+            // console.log(mealTypes);
+             sharedData.mealTypes = mealTypes;
+             vm.mealTypes = mealTypes;
+             vm.newMeal.meal_type = "";
+         }
+ 
+         function getMealTypeNotification(notification) {
+             //console.log('Promise Notification: ' + notification);
+         }
+
+         function getFileTypeSuccess(fileTypes) {
+            //  console.log(fileTypes);
+              sharedData.fileTypes = fileTypes;
+              vm.fileTypes = fileTypes;
+              vm.newMeal.file_type = "";
+          }
+  
+          function getFileTypeNotification(notification) {
+              //console.log('Promise Notification: ' + notification);
+          }
+
+         
         if (!sharedData.meatTypes) {
             typeService.getMeatTypes()
                 .then(getMeatTypeSuccess, null, getMeatTypeNotification)
-                .catch(errorCallback)
-    
-            function getMeatTypeSuccess(meatTypes) {
-                //console.log(meatTypes);
-                sharedData.meatTypes = meatTypes;
-                vm.meatTypes = meatTypes;
-                vm.newMeal.meat_type = "";
-            }
-    
-            function getMeatTypeNotification(notification) {
-                //console.log('Promise Notification: ' + notification);
-            }
-    
-            function errorCallback(errorMsg) {
-                console.log('Error Message: ' + errorMsg);
-            }
-    
+                .catch(errorCallback)    
         }
         else
         {
@@ -44,22 +66,7 @@
             typeService.getMealTypes()
                 .then(getMealTypeSuccess, null, getMealTypeNotification)
                 .catch(errorCallback)
-    
-            function getMealTypeSuccess(mealTypes) {
-               // console.log(mealTypes);
-                sharedData.mealTypes = mealTypes;
-                vm.mealTypes = mealTypes;
-                vm.newMeal.meal_type = "";
-            }
-    
-            function getMealTypeNotification(notification) {
-                //console.log('Promise Notification: ' + notification);
-            }
-    
-            function errorCallback(errorMsg) {
-                console.log('Error Message: ' + errorMsg);
-            }
-    
+        
         }
         else {
             vm.mealTypes = sharedData.mealTypes;
@@ -71,21 +78,6 @@
                 .then(getFileTypeSuccess, null, getFileTypeNotification)
                 .catch(errorCallback)
     
-            function getFileTypeSuccess(fileTypes) {
-              //  console.log(fileTypes);
-                sharedData.fileTypes = fileTypes;
-                vm.fileTypes = fileTypes;
-                vm.newMeal.file_type = "";
-            }
-    
-            function getFileTypeNotification(notification) {
-                //console.log('Promise Notification: ' + notification);
-            }
-    
-            function errorCallback(errorMsg) {
-                console.log('Error Message: ' + errorMsg);
-            }
-    
         }
         else
         {
@@ -94,6 +86,7 @@
         }
 
         vm.save = function(){
+            //console.log(vm.newMeal);
             dataService.addNewMeal(vm.newMeal)
             .then(addMealSuccess)
             .catch(addMealError);

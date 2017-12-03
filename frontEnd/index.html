@@ -10,31 +10,40 @@
     parameter so that the back end will serve back snippets of HTML.-->
     <meta name="fragment" content="!" />
     <link href="css/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        h1 { float:left}
-        .thumbnail {
-            height: 150px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            border: none;
-        }
-        .thumbnailTiny img {
-            max-width: 100%;
-            max-height: 100%;
-            display: flex;
-            margin: 0;
-            border: none;
-        }
-    </style>
+    <link href="css/site.css" rel="stylesheet">
+    <link rel="shortcut icon" type="image/png" href="favicon.ico">
+    
 </head>
-<body ng-app="app">
-<div data-ng-controller="MainController as MainController">
-    <h1>{{ MainController.appName }}</h1>
-    <!--xs (phones), sm (tablets), md (desktops), and lg (larger desktops)-->
-    <div class = "col-lg-1 col-sm-2 col-md-2 col-xs-3" data-ng-repeat="plan in MainController.currentPlan">
-        <div class="thumbnailTiny">
+<body ng-app="app" >
+<div data-ng-controller="MainController as MainController" >
+    <header class ="container">
+        <div id ="menu" class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <!-- if small screen the menu items will be collapsed down and accessable
+                        through a chevron button-->
+                    <button class="btn btn-success navbar-toggle"
+                        data-toggle="collapse"
+                        data-target=".navbar-collapse">
+                        <span class="glyphicon glyphicon-chevron-down"></span></button>
+                    <h4>{{ MainController.appName }}</h4>
+                </div>  
+                <div class="navbar-collapse collapse">     
+                    <ul class="nav navbar-nav navbar-right">         
+                        <li class="nav active"><a href="#/Plan">Plan</a></li>
+                        <li class="nav"><a href="#/">Meals</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class ="container hidden-sm">
+        <div class='page-header'>
+            <h4>Current Meal Plan</h4>
+            <p>Select a meal for details and to remove it from the current plan</p></div>
+        <!--xs (phones), sm (portrait tablets), md (landscape tablet), and lg (larger desktops)-->
+        <div class = "col-lg-1 col-sm-2 col-md-1 col-xs-3 " data-ng-repeat="plan in MainController.currentPlan">
+            <div>
                 <div ng-controller="ModalController as modalController" class="modal-demo">
                     <script type="text/ng-template" id="myModalContent.html">
                         <div class="modal-header">
@@ -55,32 +64,28 @@
                             <button class="btn btn-warning" type="button" ng-click="modalController.cancel()">Cancel</button>
                         </div>
                     </script>
-                    <a href="" ng-click="modalController.open(plan)">
-                        <img ng-src="{{plan.image_path}}" alt = "{{plan.name}}" style="width:50%" />
-                    </a>
+                    <div class = "row hidden-sm"><!--hide if on mobile, too squishy)-->
+                        <a href="" ng-click="modalController.open(plan)">
+                            <img class="image-responsive pull-right thumbnailTiny-img" ng-src="{{plan.image_path}}" alt = "{{plan.name}}"  />
+                        </a>
+                    </div>
                 </div>
-        
+            
+            </div>
         </div>
     </div>
-    <br>
-    <br>
-    <br><br>
-    <br>
-    <a href="#/">Main</a>
-    <a href="#/AutoFill">Auto-Fill Plan</a>
-    <a href="#/AddNewMeal">Add New Meal</a>
-    <a href="#/ViewHistory">View History</a>
-
-    <div ng-view></div>
+    <hr />
+    
+    <div class ="container" ng-view></div>
 </div>
 <script src="app/angular/angular.min.js"></script>
-<!--<script src="css/js/jquery-3.0.0.min.js"></script>
-<script src="css/js/bootstrap.min.js"></script>-->
+<script src="css/js/jquery-3.0.0.min.js"></script>
+<script src="css/js/bootstrap.min.js"></script>
 <script src="css/js/ui-bootstrap-tpls-2.5.0.min.js"></script>
 <script src="app/angular/angular-route.min.js"></script>
-<script src="app/angular/angular-resource.js"></script>
 <script src="app/angular/angular-animate.js"></script>
 <script src="app/angular/angular-sanitize.js"></script>
+<!--<script src="app/angular/angular-resource.js"></script>-->
 <script src="app/app.js"></script>
 <script src="app/controllers/MainController.js"></script>
 <script src="app/meal/MealController.js"></script>

@@ -12,26 +12,48 @@
         vm.currentMeal = {};
         currentMeal = {};
 
+        function getMeatTypeSuccess(meatTypes) {
+            //console.log(meatTypes);
+            sharedData.meatTypes = meatTypes;
+            vm.meatTypes = meatTypes;
+            populateItems();
+        }
+
+        function getMeatTypeNotification(notification) {
+            //console.log('Promise Notification: ' + notification);
+        }
+
+        function errorCallback(errorMsg) {
+            console.log('Error Message: ' + errorMsg);
+        }
+
+        function getMealTypeSuccess(mealTypes) {
+            // console.log(mealTypes);
+             sharedData.mealTypes = mealTypes;
+             vm.mealTypes = mealTypes;
+             populateItems();
+         }
+ 
+         function getMealTypeNotification(notification) {
+             //console.log('Promise Notification: ' + notification);
+         }
+         function getFileTypeSuccess(fileTypes) {
+            //  console.log(fileTypes);
+              sharedData.fileTypes = fileTypes;
+              vm.fileTypes = fileTypes;
+              populateItems();                
+          }
+  
+          function getFileTypeNotification(notification) {
+              //console.log('Promise Notification: ' + notification);
+          }
+  
+
+
         if (!sharedData.meatTypes) {
             typeService.getMeatTypes()
                 .then(getMeatTypeSuccess, null, getMeatTypeNotification)
-                .catch(errorCallback)
-    
-            function getMeatTypeSuccess(meatTypes) {
-                //console.log(meatTypes);
-                sharedData.meatTypes = meatTypes;
-                vm.meatTypes = meatTypes;
-                populateItems();
-            }
-    
-            function getMeatTypeNotification(notification) {
-                //console.log('Promise Notification: ' + notification);
-            }
-    
-            function errorCallback(errorMsg) {
-                console.log('Error Message: ' + errorMsg);
-            }
-    
+                .catch(errorCallback)    
         }
         else
         {
@@ -42,23 +64,7 @@
         if (!sharedData.mealTypes) {
             typeService.getMealTypes()
                 .then(getMealTypeSuccess, null, getMealTypeNotification)
-                .catch(errorCallback)
-    
-            function getMealTypeSuccess(mealTypes) {
-               // console.log(mealTypes);
-                sharedData.mealTypes = mealTypes;
-                vm.mealTypes = mealTypes;
-                populateItems();
-            }
-    
-            function getMealTypeNotification(notification) {
-                //console.log('Promise Notification: ' + notification);
-            }
-    
-            function errorCallback(errorMsg) {
-                console.log('Error Message: ' + errorMsg);
-            }
-    
+                .catch(errorCallback)    
         }
         else {
             vm.mealTypes = sharedData.mealTypes;
@@ -69,21 +75,6 @@
             typeService.getFileTypes()
                 .then(getFileTypeSuccess, null, getFileTypeNotification)
                 .catch(errorCallback)
-    
-            function getFileTypeSuccess(fileTypes) {
-              //  console.log(fileTypes);
-                sharedData.fileTypes = fileTypes;
-                vm.fileTypes = fileTypes;
-                populateItems();                
-            }
-    
-            function getFileTypeNotification(notification) {
-                //console.log('Promise Notification: ' + notification);
-            }
-    
-            function errorCallback(errorMsg) {
-                console.log('Error Message: ' + errorMsg);
-            }
     
         }
         else
@@ -110,9 +101,9 @@
             if (vm.meatTypes &&vm.mealTypes&&vm.fileTypes&&currentMeal)
             {
                 vm.currentMeal = currentMeal;
-                var index = vm.fileTypes.findIndex(x => x.id==vm.currentMeal.file_type);
+                var index = vm.fileTypes.findIndex(function(x){x.id==vm.currentMeal.file_type});
                 vm.currentMeal.file_type = vm.fileTypes[index];
-                index = vm.mealTypes.findIndex(x => x.id==vm.currentMeal.meal_type_id);
+                index = vm.mealTypes.findIndex(function(x){x.id==vm.currentMeal.meal_type_id});
                 vm.currentMeal.meal_type = vm.mealTypes[index];
             }
         }

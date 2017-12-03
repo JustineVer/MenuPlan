@@ -74,7 +74,7 @@
         }
 
         function addMealError(response) {
-            return $q.reject('Error adding plan. (HTTP status: ' + response.status + ')');
+            return $q.reject('Error adding meal. (HTTP status: ' + response.status + ')');
         }
 
         function getMealByID(mealID) {
