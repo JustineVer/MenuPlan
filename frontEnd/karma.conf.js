@@ -39,7 +39,8 @@ module.exports = function(config) {
       'test/spec/dataServiceSpec.js',
       'test/spec/typeServiceSpec.js',
       'test/spec/autoFillControllerSpec.js',
-      'test/spec/addMealControllerSpec.js'
+      'test/spec/addMealControllerSpec.js',
+      'test/spec/editMealControllerSpec.js',
     ],
 
 
