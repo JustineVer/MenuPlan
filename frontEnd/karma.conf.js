@@ -18,16 +18,15 @@ module.exports = function(config) {
       'app/angular/angular.min.js',
       'app/angular/angular-mocks.js',
       'app/angular/angular-resource.min.js',
-      /*'css/js/jquery-3.0.0.min.js',
+      'app/angular/angular-route.min.js',
+      'css/js/jquery-3.0.0.min.js',
       'css/js/bootstrap.min.js',
       'css/js/ui-bootstrap-tpls-2.5.0.min.js',
-      'app/angular/angular-route.min.js',
+      /*
       'app/angular/angular-animate.js',
       'app/angular/angular-sanitize.js',*/
       //'app/service.js',
       //'/app/config/sharedData.js',
-      
-      
       //'app/angular/*.js',
       'app/*.js',
       'app/config/*.js',
@@ -41,7 +40,9 @@ module.exports = function(config) {
       'test/spec/autoFillControllerSpec.js',
       'test/spec/addMealControllerSpec.js',
       'test/spec/editMealControllerSpec.js',
-      'test/spec/mealControllerSpec.js'
+      'test/spec/mealControllerSpec.js',
+      'test/spec/modalControllerSpec.js',
+      'test/spec/modalInstanceControllerSpec.js'
     ],
 
 
