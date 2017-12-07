@@ -10,7 +10,7 @@
 
         var vm = this;
         vm.currentMeal = {};
-        currentMeal = {};
+        var currentMeal = {};
 
         function getMeatTypeSuccess(meatTypes) {
             //console.log(meatTypes);
@@ -28,7 +28,6 @@
         }
 
         function getMealTypeSuccess(mealTypes) {
-            // console.log(mealTypes);
              sharedData.mealTypes = mealTypes;
              vm.mealTypes = mealTypes;
              populateItems();
@@ -48,8 +47,6 @@
               //console.log('Promise Notification: ' + notification);
           }
   
-
-
         if (!sharedData.meatTypes) {
             typeService.getMeatTypes()
                 .then(getMeatTypeSuccess, null, getMeatTypeNotification)
@@ -75,21 +72,27 @@
             typeService.getFileTypes()
                 .then(getFileTypeSuccess, null, getFileTypeNotification)
                 .catch(errorCallback)
-    
         }
         else
         {
             vm.fileTypes = sharedData.fileTypes;
             populateItems();
         }
-        
+
         dataService.getMealByID($routeParams.mealID)
         .then(getMealSuccess)
         .catch(getMealError);
 
         function getMealSuccess(meal) {
+            //console.log(meal);
             currentMeal = meal[0];
-            currentMeal.meat_type = makeStringIntoArrayObject(currentMeal.meat_type_id, currentMeal.meat_type, 'meat_type');
+            if (currentMeal.meat_type.constructor === Array){
+                //weird work around, ! doesn't seem to work
+            }
+            else
+            {
+                currentMeal.meat_type = makeStringIntoArrayObject(currentMeal.meat_type_id, currentMeal.meat_type, 'meat_type');
+            }
             populateItems();
         }
 
@@ -101,19 +104,19 @@
             if (vm.meatTypes &&vm.mealTypes&&vm.fileTypes&&currentMeal)
             {
                 vm.currentMeal = currentMeal;
-                var index = vm.fileTypes.findIndex(function(x){x.id==vm.currentMeal.file_type});
+                var index = vm.fileTypes.findIndex(function(x){ return x.id==vm.currentMeal.file_type;});
                 vm.currentMeal.file_type = vm.fileTypes[index];
-                index = vm.mealTypes.findIndex(function(x){x.id==vm.currentMeal.meal_type_id});
+                var index = vm.mealTypes.findIndex(function(x){ return x.id==vm.currentMeal.meal_type_id;});
                 vm.currentMeal.meal_type = vm.mealTypes[index];
             }
         }
 
         vm.save = function(){
-            console.log(vm.currentMeal);
+//            console.log(vm.currentMeal);
             dataService.updateMeal(vm.currentMeal)
             .then(updateMealSuccess)
             .catch(updateMealError);
-        };
+              };
 
         function updateMealSuccess(message) {
             $log.info(message);
@@ -133,8 +136,6 @@
             var newObject = {};
             var tempId = stringId;
             var tempDescription = stringDescription;
-
-
             while (tempId.indexOf(',')>0) {
                 newObject = {};
                 newObject.id = tempId.substring(0,tempId.indexOf(', '));

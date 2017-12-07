@@ -16,7 +16,7 @@
         ariaLabelledBy: 'modal-title',
         ariaDescribedBy: 'modal-body',
         templateUrl: 'myModalContent.html',
-        controller: 'ModalInstanceCtrl',
+        controller: 'ModalInstanceController',
         controllerAs: 'modalController',
         size: size,
         resolve: {
@@ -33,71 +33,7 @@
     };
   };
 
-  // Please note that $uibModalInstance represents a modal window (instance) dependency.
-  // It is not the same as the $uibModal service used above.
-
-  angular.module('app')
-    .controller('ModalInstanceCtrl', ModalInstanceCtrl);
-
-  ModalInstanceCtrl.$inject = ['$location','$scope', '$rootScope','$uibModalInstance', 'dataService','detailItem', 'sharedData'];
-
-
-  function ModalInstanceCtrl($location, $scope, $rootScope, $uibModalInstance, dataService, detailItem, sharedData) {
-    var modalController = this;
-    modalController.detailItem = detailItem;
-    
-    modalController.ok = function () {
-      console.log(modalController.detailItem.name);
-      $uibModalInstance.close();
-    };
-
-    modalController.edit = function () {
-      console.log(modalController.detailItem);
-      $uibModalInstance.close();
-      var editPath = '/EditMeal/'+modalController.detailItem.id;
-      $location.path(editPath);
-    };
-
-    modalController.remove = function () {
-      //weird work around for modal caching incorrectly
-      if (!modalController.detailItem.eaten_id)
-      {
-        $rootScope.$emit("RemoveAutoFilledMeal", modalController.detailItem);
-        $uibModalInstance.close();
-      }
-      else
-      {
-        deletePlan();
-      }
-    }
-
-    modalController.cancel = function () {
-      $uibModalInstance.dismiss('cancel');
-    };
-
-    modalController.removePlan = function () {
-      deletePlan();
-    };
-    function deletePlan() {
-      dataService.deletePlan(modalController.detailItem.eaten_id)
-      .then(getDeletePlanSuccess, null, getDeletePlanNotification)
-      .catch(errorCallback);
-
-      function getDeletePlanSuccess() {
-          $rootScope.$emit("refreshCurrentPlan", modalController.detailItem);
-          $uibModalInstance.close();
-      }
-
-      function getDeletePlanNotification(notification) {
-          //console.log('Promise Notification: ' + notification);
-      }
-
-      function errorCallback(errorMsg) {
-          console.log('Error Message: ' + errorMsg);
-      }
-    }
-  };
-
+  
   // Please note that the close and dismiss bindings are from $uibModalInstance.
 
   angular.module('app').component('modalComponent', {

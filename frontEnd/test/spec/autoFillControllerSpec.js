@@ -78,21 +78,12 @@ describe('Auto Fill Controller', function(){
         sharedData.mealTypes = mealTypesValue;
         sharedData.meatTypes = meatTypesValue;
         sharedData.allMeals = allMealsValue;
-        sharedData.meatTypes[0].noMeats = "0";
-        sharedData.meatTypes[1].noMeats = "0";
-        sharedData.meatTypes[2].noMeats = "0";
-        sharedData.meatTypes[3].noMeats = "0";
-        sharedData.meatTypes[4].noMeats = "0";
-        sharedData.meatTypes[5].noMeats = "0";
-        sharedData.meatTypes[6].noMeats = "0";
-        sharedData.meatTypes[7].noMeats = "0";
-        sharedData.meatTypes[8].noMeats = "0";
-        sharedData.meatTypes[9].noMeats = "0";
-        sharedData.meatTypes[10].noMeats = "0";
-        sharedData.meatTypes[11].noMeats = "0";
-        sharedData.mealTypes[0].noMeals = "0";
-        sharedData.mealTypes[1].noMeals = "0";
-        sharedData.mealTypes[2].noMeals = "0";
+        for (var i =0; i<sharedData.meatTypes.length;i++){
+            sharedData.meatTypes[i].noMeats = "0";
+        }
+        for (var i =0; i<sharedData.mealTypes.length;i++){
+            sharedData.mealTypes[i].noMeals = "0";
+        }
         dataService = _dataService_;
         $controller = _$controller_;
     }));
@@ -238,75 +229,28 @@ describe('Auto Fill Controller', function(){
             expect($controller.autoMeals[1].meat_type_id).toInclude('1');
         });
         it("should autofill when a value is entered for every meat", function(){
-            sharedData.meatTypes[0].noMeats = "1";
-            sharedData.meatTypes[1].noMeats = "1";
-            sharedData.meatTypes[2].noMeats = "1";
-            sharedData.meatTypes[3].noMeats = "1";
-            sharedData.meatTypes[4].noMeats = "1";
-            sharedData.meatTypes[5].noMeats = "1";
-            sharedData.meatTypes[6].noMeats = "1";
-            sharedData.meatTypes[7].noMeats = "1";
-            sharedData.meatTypes[8].noMeats = "1";
-            sharedData.meatTypes[9].noMeats = "1";
-            sharedData.meatTypes[10].noMeats = "1";
-            sharedData.meatTypes[11].noMeats = "1";
+            for (var i =0; i<sharedData.meatTypes.length;i++){
+                sharedData.meatTypes[i].noMeats = "1";
+            }
             
             $controller = $controller('AutoFillController', {$scope: $scope,$rootScope:$rootScope,$q:$q, typeService:typeService, $log:$log, sharedData:sharedData, dataService:dataService});
             $controller.autoFill();
-            expect($controller.autoMeals[0].meat_type_id).toInclude('1');
-            expect($controller.autoMeals[1].meat_type_id).toInclude('2');
-            expect($controller.autoMeals[2].meat_type_id).toInclude('3');
-            expect($controller.autoMeals[3].meat_type_id).toInclude('4');
-            expect($controller.autoMeals[4].meat_type_id).toInclude('5');
-            expect($controller.autoMeals[5].meat_type_id).toInclude('6');
-            expect($controller.autoMeals[6].meat_type_id).toInclude('7');
-            expect($controller.autoMeals[7].meat_type_id).toInclude('8');
-            expect($controller.autoMeals[8].meat_type_id).toInclude('9');
-            expect($controller.autoMeals[9].meat_type_id).toInclude('10');
-            expect($controller.autoMeals[10].meat_type_id).toInclude('11');
-            expect($controller.autoMeals[11].meat_type_id).toInclude('12');
+            for (var i =0; i<$controller.autoMeals.length;i++){
+                expect($controller.autoMeals[i].meat_type_id).toInclude(i+1);
+            }
         });
 
         it("should autofill when a value greater than one is entered for all Meats", function(){
-            sharedData.meatTypes[0].noMeats = "2";
-            sharedData.meatTypes[1].noMeats = "2";
-            sharedData.meatTypes[2].noMeats = "2";
-            sharedData.meatTypes[3].noMeats = "2";
-            sharedData.meatTypes[4].noMeats = "2";
-            sharedData.meatTypes[5].noMeats = "2";
-            sharedData.meatTypes[6].noMeats = "2";
-            sharedData.meatTypes[7].noMeats = "2";
-            sharedData.meatTypes[8].noMeats = "2";
-            sharedData.meatTypes[9].noMeats = "2";
-            sharedData.meatTypes[10].noMeats = "2";
-            sharedData.meatTypes[11].noMeats = "2";
+            for (var i =0; i<sharedData.meatTypes.length;i++){
+                sharedData.meatTypes[i].noMeats = "2";
+            }
             
             $controller = $controller('AutoFillController', {$scope: $scope,$rootScope:$rootScope,$q:$q, typeService:typeService, $log:$log, sharedData:sharedData, dataService:dataService});
             $controller.autoFill();
-            expect($controller.autoMeals[0].meat_type_id).toInclude('1');
-            expect($controller.autoMeals[1].meat_type_id).toInclude('1');
-            expect($controller.autoMeals[2].meat_type_id).toInclude('2');
-            expect($controller.autoMeals[3].meat_type_id).toInclude('2');
-            expect($controller.autoMeals[4].meat_type_id).toInclude('3');
-            expect($controller.autoMeals[5].meat_type_id).toInclude('3');
-            expect($controller.autoMeals[6].meat_type_id).toInclude('4');
-            expect($controller.autoMeals[7].meat_type_id).toInclude('4');
-            expect($controller.autoMeals[8].meat_type_id).toInclude('5');
-            expect($controller.autoMeals[9].meat_type_id).toInclude('5');
-            expect($controller.autoMeals[10].meat_type_id).toInclude('6');
-            expect($controller.autoMeals[11].meat_type_id).toInclude('6');
-            expect($controller.autoMeals[12].meat_type_id).toInclude('7');
-            expect($controller.autoMeals[13].meat_type_id).toInclude('7');
-            expect($controller.autoMeals[14].meat_type_id).toInclude('8');
-            expect($controller.autoMeals[15].meat_type_id).toInclude('8');
-            expect($controller.autoMeals[16].meat_type_id).toInclude('9');
-            expect($controller.autoMeals[17].meat_type_id).toInclude('9');
-            expect($controller.autoMeals[18].meat_type_id).toInclude('10');
-            expect($controller.autoMeals[19].meat_type_id).toInclude('10');
-            expect($controller.autoMeals[20].meat_type_id).toInclude('11');
-            expect($controller.autoMeals[21].meat_type_id).toInclude('11');
-            expect($controller.autoMeals[22].meat_type_id).toInclude('12');
-            expect($controller.autoMeals[23].meat_type_id).toInclude('12');
+            for (var i =0; i<$controller.autoMeals.length;i++){
+                var alteredIndex = Math.floor((i+2)/2);
+                expect($controller.autoMeals[i].meat_type_id).toInclude(alteredIndex);
+            }
         });
 
         it("should throw an error when more meals are requested than can be found", function(){
@@ -336,39 +280,34 @@ describe('Auto Fill Controller', function(){
         });
 
         it("should autofill when a value is entered for every meal", function(){
-            sharedData.mealTypes[0].noMeals = "1";
-            sharedData.mealTypes[1].noMeals = "1";
-            sharedData.mealTypes[2].noMeals = "1";
-            
+            for (var i =0; i<sharedData.mealTypes.length;i++){
+                sharedData.mealTypes[i].noMeals = "1";
+            }
             $controller = $controller('AutoFillController', {$scope: $scope,$rootScope:$rootScope,$q:$q, typeService:typeService, $log:$log, sharedData:sharedData, dataService:dataService});
             $controller.autoFill();
-            expect($controller.autoMeals[0].meal_type_id).toInclude('1');
-            expect($controller.autoMeals[1].meal_type_id).toInclude('2');
-            expect($controller.autoMeals[2].meal_type_id).toInclude('3');
-            expect($controller.autoMeals[0].whyGenerated).toBe('meal');
-            expect($controller.autoMeals[1].whyGenerated).toBe('meal');
-            expect($controller.autoMeals[2].whyGenerated).toBe('meal');
+            for (var i =0; i<$controller.autoMeals.length;i++){
+                expect($controller.autoMeals[i].meal_type_id).toInclude(i+1);
+                expect($controller.autoMeals[i].whyGenerated).toBe('meal');
+            }
         });
 
         it("should autofill when a value greater than one is entered for all meals", function(){
-            sharedData.mealTypes[0].noMeals = "2";
-            sharedData.mealTypes[1].noMeals = "2";
-            sharedData.mealTypes[2].noMeals = "2";
+            for (var i =0; i<sharedData.mealTypes.length;i++){
+                sharedData.mealTypes[i].noMeals = "2";
+            }
             
             $controller = $controller('AutoFillController', {$scope: $scope,$rootScope:$rootScope,$q:$q, typeService:typeService, $log:$log, sharedData:sharedData, dataService:dataService});
             $controller.autoFill();
+            for (var i =0; i<$controller.autoMeals.length;i++){
+                expect($controller.autoMeals[i].whyGenerated).toBe('meal');
+            }
+            
             expect($controller.autoMeals[0].meal_type_id).toInclude('1');
             expect($controller.autoMeals[1].meal_type_id).toInclude('1');
             expect($controller.autoMeals[2].meal_type_id).toInclude('2');
             expect($controller.autoMeals[3].meal_type_id).toInclude('2');
             expect($controller.autoMeals[4].meal_type_id).toInclude('3');
             expect($controller.autoMeals[5].meal_type_id).toInclude('3');
-            expect($controller.autoMeals[0].whyGenerated).toBe('meal');
-            expect($controller.autoMeals[1].whyGenerated).toBe('meal');
-            expect($controller.autoMeals[2].whyGenerated).toBe('meal');
-            expect($controller.autoMeals[3].whyGenerated).toBe('meal');
-            expect($controller.autoMeals[4].whyGenerated).toBe('meal');
-            expect($controller.autoMeals[5].whyGenerated).toBe('meal');
         });
 
         it("should throw an error when more meals are requested than can be found", function(){
@@ -404,136 +343,54 @@ describe('Auto Fill Controller', function(){
             expect($controller.autoMeals[3].meal_type_id).toInclude('1');
             expect($controller.autoMeals[3].whyGenerated).toBe('meal');
         });
+        
         it("should autofill when a value is entered for every meat and meal", function(){
-            sharedData.meatTypes[0].noMeats = "1";
-            sharedData.meatTypes[1].noMeats = "1";
-            sharedData.meatTypes[2].noMeats = "1";
-            sharedData.meatTypes[3].noMeats = "1";
-            sharedData.meatTypes[4].noMeats = "1";
-            sharedData.meatTypes[5].noMeats = "1";
-            sharedData.meatTypes[6].noMeats = "1";
-            sharedData.meatTypes[7].noMeats = "1";
-            sharedData.meatTypes[8].noMeats = "1";
-            sharedData.meatTypes[9].noMeats = "1";
-            sharedData.meatTypes[10].noMeats = "1";
-            sharedData.meatTypes[11].noMeats = "1";
-            sharedData.mealTypes[0].noMeals = "1";
-            sharedData.mealTypes[1].noMeals = "1";
-            sharedData.mealTypes[2].noMeals = "1";
+            for (var i =0; i<sharedData.meatTypes.length;i++){
+                sharedData.meatTypes[i].noMeats = "1";
+            }
+            for (var i =0; i<sharedData.mealTypes.length;i++){
+                sharedData.mealTypes[i].noMeals = "1";
+            }
             
             $controller = $controller('AutoFillController', {$scope: $scope,$rootScope:$rootScope,$q:$q, typeService:typeService, $log:$log, sharedData:sharedData, dataService:dataService});
             $controller.autoFill();
-            expect($controller.autoMeals[0].meat_type_id).toInclude('1');
-            expect($controller.autoMeals[0].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[1].meat_type_id).toInclude('2');
-            expect($controller.autoMeals[1].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[2].meat_type_id).toInclude('3');
-            expect($controller.autoMeals[2].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[3].meat_type_id).toInclude('4');
-            expect($controller.autoMeals[3].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[4].meat_type_id).toInclude('5');
-            expect($controller.autoMeals[4].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[5].meat_type_id).toInclude('6');
-            expect($controller.autoMeals[5].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[6].meat_type_id).toInclude('7');
-            expect($controller.autoMeals[6].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[7].meat_type_id).toInclude('8');
-            expect($controller.autoMeals[7].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[8].meat_type_id).toInclude('9');
-            expect($controller.autoMeals[8].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[9].meat_type_id).toInclude('10');
-            expect($controller.autoMeals[9].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[10].meat_type_id).toInclude('11');
-            expect($controller.autoMeals[10].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[11].meat_type_id).toInclude('12');
-            expect($controller.autoMeals[11].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[12].meal_type_id).toInclude('1');
-            expect($controller.autoMeals[12].whyGenerated).toBe('meal');
-            expect($controller.autoMeals[13].meal_type_id).toInclude('2');
-            expect($controller.autoMeals[13].whyGenerated).toBe('meal');
-            expect($controller.autoMeals[14].meal_type_id).toInclude('3');
-            expect($controller.autoMeals[14].whyGenerated).toBe('meal');
+            for (var i =0; i<$controller.autoMeals.length;i++){
+                if (i<sharedData.meatTypes.length){
+                    expect($controller.autoMeals[i].meat_type_id).toInclude(i+1);
+                    expect($controller.autoMeals[i].whyGenerated).toBe('meat');
+                }
+                else {
+                    var mealId = i-sharedData.meatTypes.length+1;
+                    expect($controller.autoMeals[i].meal_type_id).toInclude(mealId);
+                    expect($controller.autoMeals[i].whyGenerated).toBe('meal');
+                }
+            }
         });
         
         it("should autofill when a value greater than one is entered for all Meats", function(){
-            sharedData.meatTypes[0].noMeats = "2";
-            sharedData.meatTypes[1].noMeats = "2";
-            sharedData.meatTypes[2].noMeats = "2";
-            sharedData.meatTypes[3].noMeats = "2";
-            sharedData.meatTypes[4].noMeats = "2";
-            sharedData.meatTypes[5].noMeats = "2";
-            sharedData.meatTypes[6].noMeats = "2";
-            sharedData.meatTypes[7].noMeats = "2";
-            sharedData.meatTypes[8].noMeats = "2";
-            sharedData.meatTypes[9].noMeats = "2";
-            sharedData.meatTypes[10].noMeats = "2";
-            sharedData.meatTypes[11].noMeats = "2";
-            sharedData.mealTypes[0].noMeals = "2";
-            sharedData.mealTypes[1].noMeals = "2";
-            sharedData.mealTypes[2].noMeals = "2";
-
+            for (var i =0; i<sharedData.meatTypes.length;i++){
+                sharedData.meatTypes[i].noMeats = "2";
+            }
+            for (var i =0; i<sharedData.mealTypes.length;i++){
+                sharedData.mealTypes[i].noMeals = "2";
+            }
+            
             $controller = $controller('AutoFillController', {$scope: $scope,$rootScope:$rootScope,$q:$q, typeService:typeService, $log:$log, sharedData:sharedData, dataService:dataService});
             $controller.autoFill();
-            expect($controller.autoMeals[0].meat_type_id).toInclude('1');
-            expect($controller.autoMeals[0].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[1].meat_type_id).toInclude('1');
-            expect($controller.autoMeals[1].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[2].meat_type_id).toInclude('2');
-            expect($controller.autoMeals[2].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[3].meat_type_id).toInclude('2');
-            expect($controller.autoMeals[3].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[4].meat_type_id).toInclude('3');
-            expect($controller.autoMeals[4].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[5].meat_type_id).toInclude('3');
-            expect($controller.autoMeals[5].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[6].meat_type_id).toInclude('4');
-            expect($controller.autoMeals[6].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[7].meat_type_id).toInclude('4');
-            expect($controller.autoMeals[7].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[8].meat_type_id).toInclude('5');
-            expect($controller.autoMeals[8].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[9].meat_type_id).toInclude('5');
-            expect($controller.autoMeals[9].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[10].meat_type_id).toInclude('6');
-            expect($controller.autoMeals[10].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[11].meat_type_id).toInclude('6');
-            expect($controller.autoMeals[11].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[12].meat_type_id).toInclude('7');
-            expect($controller.autoMeals[12].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[13].meat_type_id).toInclude('7');
-            expect($controller.autoMeals[13].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[14].meat_type_id).toInclude('8');
-            expect($controller.autoMeals[14].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[15].meat_type_id).toInclude('8');
-            expect($controller.autoMeals[15].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[16].meat_type_id).toInclude('9');
-            expect($controller.autoMeals[16].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[17].meat_type_id).toInclude('9');
-            expect($controller.autoMeals[17].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[18].meat_type_id).toInclude('10');
-            expect($controller.autoMeals[18].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[19].meat_type_id).toInclude('10');
-            expect($controller.autoMeals[19].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[20].meat_type_id).toInclude('11');
-            expect($controller.autoMeals[20].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[21].meat_type_id).toInclude('11');
-            expect($controller.autoMeals[21].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[22].meat_type_id).toInclude('12');
-            expect($controller.autoMeals[22].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[23].meat_type_id).toInclude('12');
-            expect($controller.autoMeals[23].whyGenerated).toBe('meat');
-            expect($controller.autoMeals[24].meal_type_id).toInclude('1');
-            expect($controller.autoMeals[24].whyGenerated).toBe('meal');
-            expect($controller.autoMeals[25].meal_type_id).toInclude('1');
-            expect($controller.autoMeals[25].whyGenerated).toBe('meal');
-            expect($controller.autoMeals[26].meal_type_id).toInclude('2');
-            expect($controller.autoMeals[26].whyGenerated).toBe('meal');
-            expect($controller.autoMeals[27].meal_type_id).toInclude('2');
-            expect($controller.autoMeals[27].whyGenerated).toBe('meal');
-            expect($controller.autoMeals[28].meal_type_id).toInclude('3');
-            expect($controller.autoMeals[28].whyGenerated).toBe('meal');
-            expect($controller.autoMeals[29].meal_type_id).toInclude('3');
-            expect($controller.autoMeals[29].whyGenerated).toBe('meal');
+            for (var i =0; i<$controller.autoMeals.length;i++){
+                if (i<(sharedData.meatTypes.length*2)) {
+                    expect($controller.autoMeals[i].whyGenerated).toBe('meat');
+                    var alteredIndex = Math.floor((i+2)/2);
+                    expect($controller.autoMeals[i].meat_type_id).toInclude(alteredIndex);
+                
+                }
+                else {
+                    var mealId = i-sharedData.meatTypes.length+1;
+                    expect($controller.autoMeals[i].whyGenerated).toBe('meal');
+                    var alteredIndex = Math.floor((i-(sharedData.meatTypes.length*2)+2)/2);
+                    expect($controller.autoMeals[i].meal_type_id).toInclude(alteredIndex);
+                }
+            }
         });
     });
 
