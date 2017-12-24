@@ -263,6 +263,41 @@ describe('data service', function() {
 		expect(response).toEqual(planResponseData);
 	});
 
+	it('should delete meal',function(){
+		var mealId = 1;
+		var mealResponseData = 'Meal deleted.';
+
+		$httpBackend.when('DELETE', mealsURL+mealId)
+		.respond(200, mealResponseData);
+
+		dataService.deleteMeal(mealId)
+		.then(function(data){
+			response=data;
+		});
+
+		$httpBackend.flush();
+		expect(response).toEqual(mealResponseData);
+	});
+
+	it('should handle delete meal error',function(){
+		var response;
+		var mealId = 1;
+
+		$httpBackend.when('DELETE', mealsURL+mealId)
+		.respond(500);
+
+		dataService.deleteMeal(mealId)
+		.then(function(data){
+			response=data;
+		})
+		.catch(function(){
+			response = 'Error deleting Meal. (HTTP status: 500)';
+		});
+
+		$httpBackend.flush();
+		expect(response).toEqual('Error deleting Meal. (HTTP status: 500)');
+	});
+
 	it('should add more than one meal to plan',function(){
 		var planData = [ 
 			{ meal_option_id: "2", date_eaten: "2017-10-24T02:57:39.310Z", liked: "n" },  

@@ -86,7 +86,8 @@
         }
 
         vm.save = function(){
-            //console.log(vm.newMeal);
+            console.log(vm.newMeal);
+            vm.newMeal.image_path = '../../images/'+vm.newMeal.meat_type[0].meat_type+'.jpg';
             dataService.addNewMeal(vm.newMeal)
             .then(addMealSuccess)
             .catch(addMealError);
