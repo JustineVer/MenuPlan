@@ -40,6 +40,10 @@
       $uibModalInstance.dismiss('cancel');
     };
 
+    modalController.removeMeal = function () {
+      deleteMeal();
+    };
+
     modalController.removePlan = function () {
       deletePlan();
     };
@@ -59,6 +63,25 @@
 
       function errorCallback(errorMsg) {
           console.log('Error Message: ' + errorMsg);
+      }
+    }
+
+    function deleteMeal() {
+      dataService.deleteMeal(modalController.detailItem.id)
+      .then(getDeleteMealSuccess, null, getDeleteMealNotification)
+      .catch(errorCallback);
+
+      function getDeleteMealSuccess() {
+          $uibModalInstance.close();
+          $rootScope.$emit("refreshCurrentMeals");
+          
+      }
+
+      function getDeleteMealNotification(notification) {
+          //console.log('Promise Notification: ' + notification);
+      }
+      function errorCallback(errorMsg) {
+        console.log('Error Message: ' + errorMsg);
       }
     }
   };

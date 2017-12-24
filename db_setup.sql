@@ -561,21 +561,31 @@ Insert into eaten (meal_option_id, date_eaten) values (25, STR_TO_DATE('11/17/15
 Insert into eaten (meal_option_id, date_eaten) values (154, STR_TO_DATE('11/17/15','%m/%d/%y'));
 
 CREATE OR REPLACE VIEW meal_history AS
-SELECT mo.id, mo.name, mo.path, mo.image_path, ft.file_type, mt.meal_type, meat.meat_type, e.date_eaten, e.liked, e.id as eaten_id
+SELECT mo.id, mo.name, mo.path, mo.image_path, ft.file_type, 
+GROUP_CONCAT(DISTINCT mt.meal_type SEPARATOR ', ') meal_type,
+GROUP_CONCAT(DISTINCT mt.id SEPARATOR ', ') meal_type_id,
+GROUP_CONCAT(DISTINCT meat.meat_type SEPARATOR ', ') meat_type,
+GROUP_CONCAT(DISTINCT meat.id SEPARATOR ', ') meat_type_id, e.date_eaten, e.liked, e.id as eaten_id
 FROM meat_type_options meat_to, meat_type meat, file_type ft, meal_options mo
 LEFT JOIN meal_type_options mto ON mo.id = mto.meal_option_id
 LEFT JOIN meal_type mt ON mto.meal_type_id = mt.id
 LEFT JOIN eaten e ON mo.id = e.meal_option_id
 WHERE ft.id = mo.file_type
 AND meat.id = meat_to.meat_type_id
-AND meat_to.meal_option_id = mo.id;
+AND meat_to.meal_option_id = mo.id
+GROUP BY mo.id, e.id 
 
 
 CREATE OR REPLACE VIEW meals AS
-SELECT mo.id, mo.name, mo.path, mo.image_path, ft.file_type, mt.meal_type, meat.meat_type
-FROM meat_type_options meat_to, meat_type meat, file_type ft, meal_options mo
+SELECT mo.id, mo.name, mo.path, mo.image_path, ft.file_type file_type_desc, ft.id file_type,
+GROUP_CONCAT(DISTINCT mt.meal_type SEPARATOR ', ') meal_type,
+GROUP_CONCAT(DISTINCT mt.id SEPARATOR ', ') meal_type_id,
+GROUP_CONCAT(DISTINCT meat.meat_type SEPARATOR ', ') meat_type,
+GROUP_CONCAT(DISTINCT meat.id SEPARATOR ', ') meat_type_id
+FROM meat_type_options meat_to, meat_type meat, meal_options mo
 LEFT JOIN meal_type_options mto ON mo.id = mto.meal_option_id
 LEFT JOIN meal_type mt ON mto.meal_type_id = mt.id
-WHERE ft.id = mo.file_type
-AND meat.id = meat_to.meat_type_id
-AND meat_to.meal_option_id = mo.id;
+LEFT JOIN file_type ft ON ft.id = mo.file_type
+WHERE  meat.id = meat_to.meat_type_id
+AND meat_to.meal_option_id = mo.id
+GROUP BY mo.id;

@@ -1,24 +1,35 @@
 (function() {
     
         angular.module('app')
-            .controller('mealController', ['$q', 'dataService', '$log', '$route', 'sharedData', MealController]);
+            .controller('mealController', ['$rootScope', '$scope', '$log', 'dataService', 'sharedData', MealController]);
     
     
-        function MealController($q, dataService, $log, $route, sharedData) {
-    
+        function MealController($rootScope, $scope, $log, dataService, sharedData) {
             var vm = this;
-
             
-            dataService.getAllMeals()
-                .then(getMealsSuccess, null, getMealsNotification)
-                .catch(errorCallback)
-                .finally(getAllMealsComplete);
-    
+            getAllMeals();
+
+            function getAllMeals(){
+                dataService.getAllMeals()
+                    .then(getMealsSuccess, null, getMealsNotification)
+                    .catch(errorCallback)
+                    .finally(getAllMealsComplete);
+            }
+            
+            $rootScope.$on("refreshCurrentMeals", function(event){
+                $scope.parentmethod();
+            });
+        
+            $scope.parentmethod = function() {
+                vm.allMeals = {};
+                getAllMeals();
+            }    
+
             function getMealsSuccess(meals) {
                 //console.log(meals);
                 sharedData.allMeals = meals;
                 vm.allMeals = meals;
-                console.log(vm.allMeals);
+                //console.log(vm.allMeals);
             }
     
             function getMealsNotification(notification) {
@@ -30,45 +41,8 @@
             }
     
             function getAllMealsComplete() {
-                //console.log('getAllBooks has completed');
+                //console.log('getAllMeals has completed');
             }
-    /*
-            dataService.getAllReaders()
-                .then(getReadersSuccess)
-                .catch(errorCallback)
-                .finally(getAllReadersComplete);
-    
-            function getReadersSuccess(readers) {
-                vm.allReaders = readers;
-            }
-    
-            function getAllReadersComplete() {
-                $log.awesome('All readers retrieved');
-            }
-    
-            vm.getBadge = badgeService.retrieveBadge;
-    
-            vm.favoriteBook = $cookies.favoriteBook;
-    
-            vm.currentUser = currentUser;
-    
-            vm.deleteBook = function (bookID) {
-    
-                dataService.deleteBook(bookID)
-                    .then(deleteBookSuccess)
-                    .catch(deleteBookError);
-    
-            };
-    
-            function deleteBookSuccess(message) {
-                $log.info(message);
-                $route.reload();
-            }
-    
-            function deleteBookError(errorMessage) {
-                $log.error(errorMessage);
-            }
-    */
         }
     
     }());

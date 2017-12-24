@@ -45,7 +45,7 @@ describe('Modal Instance Controller', function(){
             expect($location.path()).toBe('/EditMeal/'+$controller.detailItem.id);
         });
 
-        it('Remove button should close modal should delete plan when called from plan screen', function(){
+        it('Remove button should close modal should delete plan when called from current plan section screen', function(){
             spyOn(dataService, 'deletePlan').and.callFake(function(){
                 var deferred = $q.defer();
                 deferred.resolve('');
@@ -76,7 +76,7 @@ describe('Modal Instance Controller', function(){
             
         });
 
-        it('Remove button should close modal should delete meal when called from meal screen', function(){
+        it('Remove button should close modal should delete proposed planned meal when called from autofill screen', function(){
             spyOn($rootScope, '$emit');
             $controller = $controller('ModalInstanceController', {$location:$location, $scope:$scope, $rootScope:$rootScope, $uibModalInstance:modalInstance, dataService:dataService, detailItem:detailItem, sharedData:sharedData});
             $controller.remove();
@@ -96,6 +96,37 @@ describe('Modal Instance Controller', function(){
             $controller.remove();
             $rootScope.$apply();
             expect(modalInstance.close).toHaveBeenCalled();
+        });
+
+        it('Delete button should close modal should delete meal when called from meal screen', function(){
+            spyOn(dataService, 'deleteMeal').and.callFake(function(){
+                var deferred = $q.defer();
+                deferred.resolve('');
+                return deferred.promise;    
+            });
+            //detailItem.id = 1;
+            $controller = $controller('ModalInstanceController', {$location:$location, $scope:$scope, $rootScope:$rootScope, $uibModalInstance:modalInstance, dataService:dataService, detailItem:detailItem, sharedData:sharedData});
+            $controller.removeMeal();
+            $rootScope.$apply();
+            expect(dataService.deleteMeal).toHaveBeenCalled();
+            expect(modalInstance.close).toHaveBeenCalled();
+            //delete detailItem.eaten_id;
+        });
+
+        xit('Remove button should cope with error when delete meal fails in the database', function(){
+            spyOn(dataService, 'deleteMeal').and.callFake(function(){
+                var deferred = $q.defer();
+                deferred.reject();
+                return deferred.promise;    
+            });
+            //detailItem.id = 1;
+            $controller = $controller('ModalInstanceController', {$location:$location, $scope:$scope, $rootScope:$rootScope, $uibModalInstance:modalInstance, dataService:dataService, detailItem:detailItem, sharedData:sharedData});
+            $controller.remove();
+            $rootScope.$apply();
+            expect(dataService.deleteMeal).toHaveBeenCalled();
+            expect(modalInstance.close).toHaveBeenCalled();
+            //delete detailItem.eaten_id;
+            
         });
 
         it('Cancel button should close modal', function(){

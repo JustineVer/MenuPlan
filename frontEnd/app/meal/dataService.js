@@ -13,8 +13,8 @@
             updateMeal: updateMeal,
             addToPlan: addToPlan,
             getCurrentPlan: getCurrentPlan,
-            deletePlan: deletePlan/*,
-            deleteMeal: deleteMeal*/
+            deletePlan: deletePlan,
+            deleteMeal: deleteMeal
         };
 
         function getAllMeals() {
@@ -190,33 +190,31 @@
             return $q.reject('Error deleting Plan. (HTTP status: ' + response.status + ')');
 
         }
-/*
-        function deleteBook(bookID) {
 
-            deleteSummaryFromCache();
-            deleteAllBooksResponseFromCache();
+        function deleteMeal(mealId) {
+            deleteAllPlansResponseFromCache();
+            deleteAllMealsResponseFromCache();
 
             return $http({
                 method: 'DELETE',
-                url: 'api/books/' + bookID
+                url: constants.MEALS_URL + mealId
             })
-                .then(deleteBookSuccess)
-                .catch(deleteBookError);
+                .then(deleteMealSuccess)
+                .catch(deleteMealError);
 
         }
 
-        function deleteBookSuccess(response) {
+        function deleteMealSuccess(response) {
 
-            return 'Book deleted.';
-
-        }
-
-        function deleteBookError(response) {
-
-            return $q.reject('Error deleting book. (HTTP status: ' + response.status + ')');
+            return 'Meal deleted.';
 
         }
 
-*/  }
+        function deleteMealError(response) {
+
+            return $q.reject('Error deleting Meal. (HTTP status: ' + response.status + ')');
+
+        }
+    }
 
 }());

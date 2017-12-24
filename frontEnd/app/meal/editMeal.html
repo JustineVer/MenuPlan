@@ -5,11 +5,38 @@
     </ol>
 </div>
 
-<form class="form-horizontal" role="form">
+<form class="form-horizontal" role="form" name="editForm" novalidate>
     <div class="form-group">
-        <label for="mealName" class="col-md-1 control-label">Name</label>
+        <label for="mealName" class="col-md-1 control-label">Name *</label>
         <div class="col-md-11">
-            <input ng-model="mealUpdate.currentMeal.name" type="text" class="form-control" id="mealName" placeholder="Name">
+            <input ng-model="mealUpdate.currentMeal.name" name='mealName' type="text" class="form-control" id="mealName" placeholder="Name" required>
+            <span style="color:red" ng-show="editForm.mealName.$dirty && editForm.mealName.$invalid">
+                <span ng-show="editForm.mealName.$error.required">Name is required.</span>
+            </span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="mealMealType" class="col-md-1 control-label">Meal Type *</label>
+        <div class="col-md-11">
+            <select class="form-control" name="mealMealType" ng-model="mealUpdate.currentMeal.meal_type" id="mealMealType" 
+                    ng-options="mealTypes as mealTypes.meal_type for mealTypes in mealUpdate.mealTypes track by mealTypes.id" required>
+                <option value="">Select Meal</option>
+            </select>
+            <span style="color:red" ng-show="editForm.mealMealType.$dirty && editForm.mealMealType.$invalid">
+                <span ng-show="editForm.mealMealType.$error.required">Meal Type is required.</span>
+            </span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="mealMeatType" class="col-md-1 control-label">Meat Type(s) *</label>
+        <div class="col-md-11">
+            <select class="form-control" multiple name="mealMeatType" ng-model="mealUpdate.currentMeal.meat_type" id="mealMeatType" 
+                    ng-options="meatTypes as meatTypes.meat_type for meatTypes in mealUpdate.meatTypes track by meatTypes.id" size="13" required>
+                <option value="">Select Meat Type(s)</option>
+            </select>
+            <span style="color:red" ng-show="editForm.mealMeatType.$dirty && editForm.mealMeatType.$invalid">
+                <span ng-show="editForm.mealMeatType.$error.required">Meat Type is required.</span>
+            </span>
         </div>
     </div>
     <div class="form-group">
@@ -18,7 +45,7 @@
             <input ng-model="mealUpdate.currentMeal.path" type="text" class="form-control" id="mealPath" placeholder="URL">
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" data-ng-show=false>
             <label for="mealImagePath" class="col-md-1 control-label">Image Path</label>
             <div class="col-md-11">
                 <input ng-model="mealUpdate.currentMeal.image_path" type="text" class="form-control" id="mealImagePath" placeholder="Image Path">
@@ -34,27 +61,11 @@
         
         </div>
     </div>
-    <div class="form-group">
-        <label for="mealMealType" class="col-md-1 control-label">Meal Type</label>
-        <div class="col-md-11">
-            <select class="form-control" ng-model="mealUpdate.currentMeal.meal_type" id="mealMealType" 
-                    ng-options="mealTypes as mealTypes.meal_type for mealTypes in mealUpdate.mealTypes track by mealTypes.id">
-                <option value="">Select Meal</option>
-            </select>
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="mealMeatType" class="col-md-1 control-label">Meat Type(s)</label>
-        <div class="col-md-11">
-            <select class="form-control" multiple ng-model="mealUpdate.currentMeal.meat_type" id="mealMeatType" 
-                    ng-options="meatTypes as meatTypes.meat_type for meatTypes in mealUpdate.meatTypes track by meatTypes.id" size="13">
-                <option value="">Select Meat Type(s)</option>
-            </select>
-        </div>
-    </div>
+    
     <div class="form-group">
         <div class="col-sm-4 col-sm-offset-1">
-            <button class="btn btn-primary" type="button" ng-click="mealUpdate.save()">Save</button>
+            <button class="btn btn-primary" type="button" ng-click="mealUpdate.save()" 
+            ng-disabled="editForm.mealName.$invalid && editForm.mealName.$dirty || editForm.mealMealType.$invalid && editForm.mealMealType.$dirty || editForm.mealMeatType.$invalid && editForm.mealMeatType.$dirty">Save</button>
             <button class="btn btn-warning" type="button" ng-click="mealUpdate.cancel()">Cancel</button>
         </div>
     </div>
